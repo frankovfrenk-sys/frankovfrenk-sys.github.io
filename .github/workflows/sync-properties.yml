@@ -1,0 +1,32 @@
+name: Sync authorized property feeds
+
+on:
+  schedule:
+    - cron: "17 */3 * * *"
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+jobs:
+  sync:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Check out catalog
+        uses: actions/checkout@v4
+      - name: Sync partner feeds
+        env:
+          PROPERTY_FEED_URLS: ${{ vars.PROPERTY_FEED_URLS }}
+          PROPERTY_CATALOG_PATH: data/properties.json
+        run: node scripts/sync-properties.mjs
+      - name: Publish catalog update
+        run: |
+          if git diff --quiet -- data/properties.json; then
+            echo "No catalog changes"
+            exit 0
+          fi
+          git config user.name "Frankov Estate Catalog"
+          git config user.email "frankovfrenk-sys@users.noreply.github.com"
+          git add data/properties.json
+          git commit -m "Update authorized property catalog"
+          git push
