@@ -1,5 +1,5 @@
 User-Agent: *
 Allow: /
 
-Host: https://frankov-estate.frankovfrenk.chatgpt.site
-Sitemap: https://frankov-estate.frankovfrenk.chatgpt.site/sitemap.xml
+Host: https://frankovfrenk-sys.github.io
+Sitemap: https://frankovfrenk-sys.github.io/sitemap.xml
